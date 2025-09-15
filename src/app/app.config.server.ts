@@ -1,13 +1,10 @@
+import { RenderMode, provideServerRendering, withRoutes } from '@angular/ssr';
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
-import { provideServerRendering } from '@angular/platform-server';
 import { appConfig } from './app.config';
 import {NotFoundComponent} from "./not-found/not-found.component";
-import {provideServerRouting, RenderMode } from '@angular/ssr';
 
 const serverConfig: ApplicationConfig = {
-  providers: [
-    provideServerRendering(),
-    provideServerRouting([
+  providers: [provideServerRendering(withRoutes([
       {
         path: '',
         renderMode: RenderMode.Server
@@ -16,8 +13,7 @@ const serverConfig: ApplicationConfig = {
         path: '**',
         renderMode: RenderMode.Server
       }
-    ])
-  ]
+    ]))]
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);
